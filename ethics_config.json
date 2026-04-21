@@ -1,0 +1,32 @@
+{
+  "ethical_mode": "Hybrid",
+  "llm_backend": "llama_cpp", 
+  "sampling_fps": 3,
+  "rule_thresholds": {
+    "pedestrian_distance_m": 2.0,
+    "ego_speed_brake_kmh": 10,
+    "red_light": true,
+    "oncoming_clearance_m": 5.0
+  },
+  "fusion": {
+    "llm_weight": 0.6,
+    "rule_weight": 1.0,
+    "risk_penalty_per_close_obj": 0.1
+  },
+  "perception": {
+    "min_confidence": 0.25,
+    "labels_map": {
+      "person": "pedestrian",
+      "bicycle": "bike",
+      "car": "vehicle",
+      "motorbike": "vehicle",
+      "bus": "vehicle",
+      "truck": "vehicle",
+      "dog": "animal",
+      "cat": "animal",
+      "stop sign": "sign",
+      "traffic light": "sign"
+    }
+  }
+}
+

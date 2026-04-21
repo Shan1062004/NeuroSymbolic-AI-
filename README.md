@@ -1,76 +1,76 @@
-# 🧠 NeuroSymbolic AI – Hybrid Intelligence System
+# NSEthics-AV: Neuro-Symbolic AI for Multimodal Ethical Reasoning in Autonomous Vehicles
 
-## 🚀 Overview
-NeuroSymbolic AI is a hybrid system that integrates deep learning-based perception with symbolic reasoning to enable explainable and intelligent decision-making.
+Local, modular MVP that runs entirely on a laptop (Windows/Linux) using open-source models.
 
-The project focuses on bridging the gap between:
-- Data-driven learning (Neural Networks)
-- Rule-based reasoning (Symbolic AI)
+## Features
+- Video ingestion from uploaded dashcam MP4 or bundled sample clips (OpenCV, configurable FPS sampling)
+- Perception with YOLOv8n (Ultralytics) for object detection; simple motion estimation
+- Context summarization to concise text for LLM input
+- Symbolic Rule Engine for deterministic safety overrides
+- Local LLM ethical reasoning (llama-cpp-python with TinyLlama 1.1B Chat GGUF by default)
+- Fusion logic combining rules + LLM with audit logs
+- FastAPI backend with REST API and optional websocket streaming
+- Next.js + Tailwind frontend: split-screen video + decision feed
+- Tests and sample scenarios
 
----
+## Quick Start
 
-## ✨ Key Features
+### Prereqs
+- Python 3.10 or 3.11
+- Node.js 18+ and pnpm (or npm/yarn)
+- Git (optional)
 
-- 🧠 Neural perception using Computer Vision models
-- 📜 Symbolic reasoning using rule-based logic
-- ⚖️ Ethical and explainable decision-making
-- 🔍 Transparent AI outputs
-- 🚗 Designed for autonomous systems
+### Backend Setup (Windows/Linux)
+```
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+pip install --upgrade pip
+pip install -r backend/requirements.txt
+```
 
----
+Download a local GGUF model (default: TinyLlama 1.1B Chat):
+```
+# Creates models/ and downloads TinyLlama
+python backend/llm/download_models.py --model tinyllama
+```
 
-## 🏗️ Architecture
+Run backend:
+```
+# From repo root
+uvicorn backend.server.api:app --host 127.0.0.1 --port 8000 --reload
+```
 
-Input (Camera / Sensors)  
-   ↓  
-Neural Network (YOLO / ViT)  
-   ↓  
-Feature Extraction  
-   ↓  
-Symbolic Knowledge Base  
-   ↓  
-Reasoning Engine  
-   ↓  
-Decision Output  
+### Frontend Setup
+```
+cd frontend
+pnpm install
+pnpm dev
+```
+Open http://localhost:3000
 
----
+## Configuration
+- ethics_config.json: thresholds and options for rule engine and fusion
+- LLM model selection via env variables or CLI flags:
+  - LLM_MODEL_PATH (default models/tinyllama-1.1b-chat.Q5_K_M.gguf)
+  - ETHICAL_MODE = Utilitarian | Deontological | Legal | Hybrid
 
-## 🛠 Tech Stack
+## API Endpoints
+- POST /upload_video -> {job_id}
+- GET /job_status/{job_id}
+- GET /decision_log/{job_id}
+- WS /stream_decisions (optional)
 
-- Python
-- OpenCV
-- YOLOv8 / Vision Transformers
-- Logic-based frameworks (Prolog / LTN / DeepProbLog)
+## Tests
+```
+pytest backend/tests -q
+```
 
----
+## Architecture
+See docs/architecture.md for module diagram.
 
-## 🧠 How It Works
+## Notes
+- YOLOv8 runs on CPU by default; enable CUDA if available.
+- LLM is used only for reasoning/explanation. Symbolic rules can override at any time.
+- All LLM outputs and final decisions are logged for audit.
 
-1. Capture input data (image/video)
-2. Neural model detects objects
-3. Convert detections into symbolic facts
-4. Apply logical rules
-5. Generate explainable decisions
-
----
-
-## 📌 Applications
-
-- Autonomous Vehicles
-- Smart Surveillance Systems
-- Robotics Decision Systems
-- Ethical AI Systems
-
----
-
-## 📌 Future Scope
-
-- Multi-modal inputs (LIDAR, Audio)
-- Real-time system integration
-- Reinforcement learning + symbolic fusion
-- Scalable reasoning engine
-
----
-
-## 👨‍💻 Author
-Shantanu Upasani

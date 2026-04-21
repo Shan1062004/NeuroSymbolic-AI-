@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+runtime/
+models/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.vercel/
+
+# Logs
+*.log
+backend/logs/
+
